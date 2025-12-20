@@ -8,6 +8,7 @@ const nextConfig = {
   },
   output: 'export',
   trailingSlash: true,
+  basePath: '/3Netra',
 }
 
 export default nextConfig
