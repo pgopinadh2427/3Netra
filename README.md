@@ -102,30 +102,77 @@ A full-stack video content registration and matching system built with Next.js a
 
 ## 🚀 Deployment
 
-### Frontend (GitHub Pages)
-The frontend is automatically deployed to GitHub Pages on push to main branch.
+### Automated Deployment
 
-**Domain**: https://www.3netraa.net
+The application uses GitHub Actions for automated deployment:
 
-### Backend Deployment Options
+#### Frontend (GitHub Pages)
+- **URL**: https://www.3netraa.net
+- **Trigger**: Push to `master` branch with changes to `frontend/` directory
+- **Workflow**: `.github/workflows/deploy.yml` (in frontend directory)
 
-#### Option 1: Railway (Recommended)
-1. Connect your GitHub repo to Railway
-2. Set environment variables in Railway dashboard
-3. Deploy automatically on push
+#### Backend Deployment Options
 
-#### Option 2: Render
-1. Create a new Web Service
-2. Connect GitHub repository
-3. Set build command: `npm install`
-4. Set start command: `npm start`
+Choose one of the following services:
+
+##### Option 1: Railway (Recommended)
+1. Create a [Railway](https://railway.app) account
+2. Connect your GitHub repository
+3. Set environment variables in Railway dashboard:
+   - `MONGODB_URI`
+   - `JWT_SECRET`
+   - `NODE_ENV=production`
+4. The workflow `.github/workflows/backend-deploy.yml` will handle deployment
+
+##### Option 2: Render
+1. Create a [Render](https://render.com) account
+2. Create a new **Web Service**
+3. Connect your GitHub repository
+4. Configure build settings:
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
 5. Add environment variables
+6. Copy the **Deploy Hook URL** for the workflow
+7. Use workflow `.github/workflows/backend-render.yml`
 
-#### Option 3: Heroku
-1. Create a new app
-2. Connect GitHub repository
-3. Enable automatic deploys
-4. Set environment variables in Heroku dashboard
+##### Option 3: Heroku
+1. Create a [Heroku](https://heroku.com) account
+2. Install Heroku CLI
+3. Create a new app: `heroku create your-app-name`
+4. Set environment variables: `heroku config:set KEY=VALUE`
+5. Enable automatic deploys in Heroku dashboard
+
+### Manual Deployment
+
+#### Backend
+```bash
+cd backend
+npm install
+npm start
+```
+
+#### Frontend
+```bash
+cd frontend
+npm install
+npm run build
+npm start
+```
+
+### Environment Setup
+
+1. **MongoDB Atlas**:
+   - Create a free cluster
+   - Get connection string
+   - Add your IP address to whitelist
+
+2. **GitHub Secrets**:
+   - Go to repository Settings → Secrets and variables → Actions
+   - Add required secrets (see `.env.example`)
+
+3. **Domain Configuration**:
+   - Frontend is configured for `www.3netraa.net`
+   - Update `NEXT_PUBLIC_API_URL` when backend is deployed
 
 ## 📡 API Endpoints
 
